@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  # Website
+  website:
+    build:
+     context: ./website
+     dockerfile: Dockerfile
+    container_name: website
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - juice-shop
+      - bwapp
+      - dvwa
+    networks:
+      - learning-network
+
+  # DVWA
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: dvwa
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    networks:
+      - learning-network
+
+  # bWAPP
+  bwapp:
+    image: raesene/bwapp:latest
+    container_name: bwapp
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    networks:
+      - learning-network
+
+  # Juice Shop
+  juice-shop:
+    image: bkimminich/juice-shop:v19.0.0
+    container_name: juice-shop
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - learning-network
+
+networks:
+  learning-network:
+    driver: bridge
