@@ -3,9 +3,10 @@ version: "3.8"
 services:
   # Website
   website:
-    build:
-     context: ./website
-     dockerfile: Dockerfile
+    image: jnye0424/hkmu-fyp-website:latest
+    #build:
+     #context: ./website
+     #dockerfile: Dockerfile
     container_name: website
     restart: unless-stopped
     ports:
